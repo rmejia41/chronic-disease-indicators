@@ -5,6 +5,7 @@ import dash_bootstrap_components as dbc
 import plotly.express as px
 import pandas as pd
 import plotly.graph_objs as go
+import dash_mantine_components as dmc
 
 # Load the dataset
 df = pd.read_csv('https://github.com/rmejia41/open_datasets/raw/main/chronicdiseases_ind.csv', low_memory=False)
@@ -39,23 +40,43 @@ health_indicator_options = [{'label': 'No Selection', 'value': 'No Selection'}] 
 
 # App layout
 app.layout = dbc.Container([
-    html.H1("U.S. Chronic Disease Indicators (CDI) Dashboard", className="text-center mb-4"),
+    html.H1("U.S. Chronic Disease Indicators (CDI) Dashboard", className="text-center mb-3"),
     dbc.Row([
         dbc.Col([
             html.Label("Select Year:"),
-            dcc.Dropdown(id='year_dropdown', options=year_options, value='No Selection')
-        ], width=4),
+            dcc.Dropdown(
+                id='year_dropdown',
+                options=year_options,
+                value='No Selection',
+                style={'width': '100%'}  # Ensures dropdown stretches to column width
+            ),
+        ], width=6, md=3),  # Adjust column width for different screen sizes
         dbc.Col([
             html.Label("Select Health Indicator:"),
-            dcc.Dropdown(id='health_indicator_dropdown', options=health_indicator_options, value='No Selection')
-        ], width=6)
+            dcc.Dropdown(
+                id='health_indicator_dropdown',
+                options=health_indicator_options,
+                value='No Selection',
+                style={'width': '100%', 'minWidth': '900px'}  # Makes dropdown wider while ensuring it matches year dropdown alignment
+            ),
+        ], width=6, md=4),  # Increase md value to make the column wider on medium screens
     ]),
+    dbc.Row([
+        dbc.Col([
+            dmc.Anchor(
+                "CDC Source Link",
+                href="https://data.cdc.gov/Chronic-Disease-Indicators/U-S-Chronic-Disease-Indicators-CDI-/g4ie-h725/about_dat",
+                className="mt-1",
+                style={"display": "block"}
+            )
+        ], width=12),
+    ], justify="start"),
     dbc.Row([
         dbc.Col(dcc.Graph(id='us_map'), width=12)
-    ]),
+    ], className="mt-1"),
     dbc.Row([
         dbc.Col(dcc.Graph(id='indicator_chart'), width=12)
-    ])
+    ], className="mt-3"),
 ], fluid=True)
 
 @app.callback(
