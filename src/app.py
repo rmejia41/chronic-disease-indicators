@@ -65,7 +65,7 @@ app.layout = dbc.Container([
         dbc.Col([
             dmc.Anchor(
                 "CDC Source Link",
-                href="https://data.cdc.gov/Chronic-Disease-Indicators/U-S-Chronic-Disease-Indicators-CDI-/g4ie-h725/about_dat",
+                href="https://data.cdc.gov/Chronic-Disease-Indicators/U-S-Chronic-Disease-Indicators-CDI-/g4ie-h725/about_data",
                 className="mt-1",
                 style={"display": "block"}
             )
